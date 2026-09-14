@@ -22,12 +22,13 @@ jobs:
           $dir = (Get-ChildItem "C:\zig" -Directory | Select-Object -First 1).FullName
           Add-Content $env:GITHUB_PATH $dir
 
-      - name: Install llvm-mingw (GNU clang)
+      - name: Install LLNV-mingw clang
         shell: pwsh
         run: |
-          Invoke-WebRequest -Uri "https://github.com/mstorsjo/llvm-mingw/releases/download/20260908/llvm-mingw-20260908-ucrt-x86_64.zip" -OutFile llvm.zip
-          Expand-Archive -Path llvm.zip -DestinationPath C:\llvm
-          Add-Content $env:GITHUB_PATH "C:\llvm\llvm-mingw-20260908-ucrt-x86_64\bin"
+          Invoke-WebRequest -Uri "https://github.com/mstorsjo/llmv-mingw/releases/download/20260908/llmv-mingw-20260908-ucrt-x86_64.zip" -OutFile mingw.zip
+          Expand-Archive -Path mingw.zip -DestinationPath C:\mingw
+          $bin = Get-ChildItem "C:\mingw\llmv-mingw-\*\bin" | Resolve-Path
+          Add-Content $env:GITHUB_PATH $bin
 
       - name: Install Native SDK CLI
         run: npm install -g @native-sdk/cli
@@ -35,7 +36,7 @@ jobs:
       - name: Restore project from bundle
         shell: pwsh
         run: |
-          Invoke-WebRequest -Uri "https://ue3kcebnzhso5m0y.public.blob.vercel-storage.com/generated/254e51ab-69e3-4b81-a7f6-6fafb2d561a5/1789348159428-repo-lFfuwHCbCh90g5GFevftWWPKkzvJsa.bundle" -OutFile repo.bundle
+          Invoke-WebRequest -Uri "https://ue3kcebnzhso5m0y.public.blob.vercel-storage.com/generated/254e51ab-69e3-4b81-a7f6-6fafb2d561a5/1789348159428-repo-lFfuwHCbCh90g5GFevftW6PkhzvJsa.bundle" -OutFile repo.bundle
           git clone repo.bundle restored
 
       - name: Install deps
