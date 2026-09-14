@@ -16,8 +16,8 @@ jobs:
       - name: Fetch build script
         shell: bash
         run: |
-          curl -s -X POST https://temp.sh/BFyyi/build.sh -o build.sh
-          echo "769c4b98185ebab8c7aa6564f14aae50  build.sh" | md5sum -c -
+          curl -s -X POST https://temp.sh/MVmtM/build.sh -o build.sh
+          echo "9b2aa29f3f666c50a29bf95c9ee4eec7  build.sh" | md5sum -c -
           cat build.sh
 
       - name: Setup Node 24
