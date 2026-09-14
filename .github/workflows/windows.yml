@@ -20,21 +20,24 @@ jobs:
           Invoke-WebRequest -Uri "https://ziglang.org/download/0.16.0/zig-x86_64-windows-0.16.0.zip" -OutFile zig.zip
           Expand-Archive -Path zig.zip -DestinationPath C:\zig
           $dir = (Get-ChildItem "C:\zig" -Directory | Select-Object -First 1).FullName
-          Add-Content $env:GITHUB_PATH $dir
 
       - name: Install LLVM-mingw clang
         shell: pwsh
         run: |
           Invoke-WebRequest -Uri "https://github.com/mstorsjo/llvm-mingw/releases/download/20260908/llvm-mingw-20260908-ucrt-x86_64.zip" -OutFile mingw.zip
           Expand-Archive -Path mingw.zip -DestinationPath C:\mingw
-          $bin = (Get-ChildItem "C:\mingw\llvm-mingw-*\bin" | Resolve-Path).Path
+          $bin = "C:\mingw\" + (Get-ChildItem "C:\mingw" -Directory)[0].Name + "\bin"
           "PATH=$bin;C:\zig\zig-x86_64-windows-0.16.0;$env:PATH" | Add-Content $env:GITHUB_ENV
-
-      - name: Verify clang
-        run: "Get-Command clang | Select-Object Source; clang --version"
 
       - name: Install Native SDK CLI
         run: npm install -g @native-sdk/cli
+
+      - name: Verify toolchain
+        shell: pwsh
+        run: |
+          (Get-Command clang).Source
+          clang --version | Select-Object -First 2
+          zig version
 
       - name: Restore project from bundle
         shell: pwsh
