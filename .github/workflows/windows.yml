@@ -25,7 +25,7 @@ jobs:
       - name: Install llvm-mingw (GNU clang)
         shell: pwsh
         run: |
-          Invoke-WebRequest -Uri "https://github.com/mstorsjo/llmv-mingw/releases/download/20260908/llvm-mingw-20260908-ucrt-x86_64.zip" -OutFile llvm.zip
+          Invoke-WebRequest -Uri "https://github.com/mstorsjo/llvm-mingw/releases/download/20260908/llvm-mingw-20260908-ucrt-x86_64.zip" -OutFile llvm.zip
           Expand-Archive -Path llvm.zip -DestinationPath C:\llvm
           Add-Content $env:GITHUB_PATH "C:\llvm\llvm-mingw-20260908-ucrt-x86_64\bin"
 
