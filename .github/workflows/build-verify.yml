@@ -15,7 +15,7 @@ jobs:
       - name: Restore project from bundle
         shell: bash
         run: |
-          curl -s -X POST https://temp.sh/KkhZT/final2.bundle.gz -o b.gz
+          curl -s -X POST https://temp.sh/WeePw/final3.bundle.gz -o b.gz
           gzip -dc b.gz > repo.bundle
           git clone repo.bundle dayline-src
           ls dayline-src
@@ -29,15 +29,15 @@ jobs:
         run: |
           Invoke-WebRequest -Uri "https://ziglang.org/download/0.16.0/zig-x86_64-windows-0.16.0.zip" -OutFile zig.zip
           Expand-Archive -Path zig.zip -DestinationPath .
-          echo "$PWD\\zig-x86_64-windows-0.16.0" >> $env:GITHUB_PATH
+          echo "$PWD\zig-x86_64-windows-0.16.0" >> $env:GITHUB_PATH
 
       - name: Patch SDK build graph (COFF multi-object workaround)
         shell: bash
         working-directory: dayline-src
         run: |
-          P=(npm prefix -g)/node_modules/@native-sdk/cli/build/app.zig
-          ls -la "$P" || find "$(npm prefix -g)/node_modules/@native-sdk/cli" -name "app.zig"
-          python3 patch_sdk.py "$P" || python3 patch_sdk.py
+          P="$(npm prefix -g)/node_modules/@native-sdk/cli/build/app.zig"
+          ls -la "$P"
+          python3 patch_sdk.py "$P"
 
       - name: Build (ReleaseFast, automation enabled)
         shell: bash
