@@ -32,14 +32,12 @@ jobs:
         shell: bash
         run: npm install -g @native-sdk/cli@0.10.1
 
-
       - name: Download Zig 0.16.0 (Windows)
         shell: pwsh
         run: |
           Invoke-WebRequest -Uri "https://ziglang.org/download/0.16.0/zig-x86_64-windows-0.16.0.zip" -OutFile zig.zip
           Expand-Archive -Path zig.zip -DestinationPath .
-          echo "$PWD\zig-x86_64-windows-0.16.0" >> $env8«GITHUB_PATH
-
+          Write-Output ("ZIG_DIR=" + (Join-Path (Get-Location) "zig-x86_64-windows-0.16.0")) | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
 
       - name: Patch SDK build graph (COFF multi-object workaround)
         shell: bash
@@ -53,6 +51,8 @@ jobs:
         shell: bash
         working-directory: dayline-src
         run: |
+          export PATH="$GITHUB_WORKSPACE/zig-x86_64-windows-0.16.0:$PATH"
+          zig version || (ls -la "$GITHUB_WORKSPACE" && exit 1)
           native build . --yes -Dtarget=x86_64-windows-gnu -Doptimize=ReleaseFast -Dautomation=true
           find zig-out -type f | head -20
 
@@ -92,5 +92,5 @@ jobs:
           cp *.png dist/ 2>/dev/null || true
           ls -la dist
           gh release delete v0.2.0 --yes || true
-          gh release create v0.2.0 --title "Dayline v0.2.0 (Native SDK)" --notes "Native SDK build with UI render fix (isMock). Verified on Windows runner." --pre" --yes
-          gh release upload dist/* --repo s7hefscs/dayline --target v0.2.0 --yes
+          gh release create v0.2.0 --title "Dayline v0.2.0 (Native SDK)" --notes "Native SDK build with UI render fix (isMock). Verified on Windows runner." --prerelease --yes
+          gh release upload dist/* --repo shtefcs/dayline --target v0.2.0 --yes
