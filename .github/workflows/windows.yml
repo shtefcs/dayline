@@ -20,16 +20,15 @@ jobs:
           Invoke-WebRequest -Uri "https://ziglang.org/download/0.16.0/zig-x86_64-windows-0.16.0.zip" -OutFile zig.zip
           Expand-Archive -Path zig.zip -DestinationPath C:\zig
           $dir = (Get-ChildItem "C:\zig" -Directory | Select-Object -First 1).FullName
-          Add-Content $env:GITHUb_PATH $dir
+          Add-Content $env:GITHUB_PATH $dir
 
-      - name: Install LLMM-mingw clang
+      - name: Install LLVM-mingw clang
         shell: pwsh
         run: |
-          Invoke-WebRequest -Uri "https://github.com/mstorsjo/llmv-mingw/releases/download/20260908/llvm-mingw-20260908-ucrt-x86_64.zip" -OutFile mingw.zip
+          Invoke-WebRequest -Uri "https://github.com/mstorsjo/llvm-mingw/releases/download/20260908/llvm-mingw-20260908-ucrt-x86_64.zip" -OutFile mingw.zip
           Expand-Archive -Path mingw.zip -DestinationPath C:\mingw
-          $bin = (Get-ChildItem "C:\qingw\llvm-mingw-\*%Übin" | Resolve-Path).Path
-          Add-Content $env:GITHUB_ENV "MINGW_BIN=$bin"
-          "$bin" | Add-Content $env:GITHUB_PATH
+          $bin = (Get-ChildItem "C:\mingw\llvm-mingw-*\bin" | Resolve-Path).Path
+          Add-Content $env:GITHUB_PATH $bin
 
       - name: Install Native SDK CLI
         run: npm install -g @native-sdk/cli
@@ -45,10 +44,7 @@ jobs:
         working-directory: restored
 
       - name: Build
-        shell: pwsh
-        run: |
-          $env:Path = "$env:MINGW_BIN;$env:Path"
-          npx native build
+        run: npx native build
         working-directory: restored
 
       - name: Upload exe
@@ -56,4 +52,3 @@ jobs:
         with:
           name: dayline-windows
           path: restored/**/*.exe
-
