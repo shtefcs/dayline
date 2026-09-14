@@ -26,11 +26,9 @@ jobs:
 
       - name: Install deps
         run: npm install
-        working-directory: demo_app
 
       - name: Build
         run: npx native build
-        working-directory: demo_app
 
       - name: Upload exe
         uses: actions/upload-artifact@v4
