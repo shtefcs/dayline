@@ -1,3 +1,4 @@
+# Native SDK build + render verification on a real Windows runner
 name: Build and Verify Windows (Native SDK)
 
 on:
@@ -28,7 +29,7 @@ jobs:
         working-directory: dayline-src
         run: |
           P=$(npm prefix -g)/node_modules/@native-sdk/cli/build/app.zig
-         ls -la "$P" || find "$(npm prefix -g)/node_modules/@native-sdk/cli" -name "app.zig"
+          ls -la "$P" || find "$(npm prefix -g)/node_modules/@native-sdk/cli" -name "app.zig"
           python3 patch_sdk.py "$P" || python3 patch_sdk.py
 
       - name: Build (ReleaseFast, automation enabled)
