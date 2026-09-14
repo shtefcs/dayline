@@ -20,6 +20,11 @@ jobs:
           git clone repo.bundle dayline-src
           ls dayline-src
 
+      - name: Install Node 24 (SDK requires >=24)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
       - name: Install Native SDK CLI
         shell: bash
         run: npm install -g @native-sdk/cli@0.10.1
@@ -51,7 +56,7 @@ jobs:
         working-directory: dayline-src
         run: |
           EXE=$(find zig-out -name "*.exe" ! -name "*services*" | head -1)
-          echo "main exe: $EXE"
+         echo "main exe: $EXE"
           ./"$EXE" &
           sleep 8
           native automate wait || true
