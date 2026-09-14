@@ -22,12 +22,12 @@ jobs:
           $dir = (Get-ChildItem "C:\zig" -Directory | Select-Object -First 1).FullName
           Add-Content $env:GITHUB_PATH $dir
 
-      - name: Install LLNV-mingw clang
+      - name: Install LLVM-mingw clang
         shell: pwsh
         run: |
-          Invoke-WebRequest -Uri "https://github.com/mstorsjo/llmv-mingw/releases/download/20260908/llmv-mingw-20260908-ucrt-x86_64.zip" -OutFile mingw.zip
+          Invoke-WebRequest -Uri "https://github.com/mstorsjo/llvm-mingw/releases/download/20260908/llvm-mingw-20260908-ucrt-x86_64.zip" -OutFile mingw.zip
           Expand-Archive -Path mingw.zip -DestinationPath C:\mingw
-          $bin = Get-ChildItem "C:\mingw\llmv-mingw-\*\bin" | Resolve-Path
+          $bin = Get-ChildItem "C:\mingw\llvm-mingw-*\bin" | Resolve-Path
           Add-Content $env:GITHUB_PATH $bin
 
       - name: Install Native SDK CLI
