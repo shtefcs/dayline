@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
@@ -15,42 +15,28 @@ jobs:
           node-version: 24
 
       - name: Install Zig 0.16.0
-        shell: pwsh
         run: |
-          Invoke-WebRequest -Uri "https://ziglang.org/download/0.16.0/zig-x86_64-windows-0.16.0.zip" -OutFile zig.zip
-          Expand-Archive -Path zig.zip -DestinationPath C:\zig
-          $dir = (Get-ChildItem "C:\zig" -Directory | Select-Object -First 1).FullName
-
-      - name: Install LLVM-mingw clang
-        shell: pwsh
-        run: |
-          Invoke-WebRequest -Uri "https://github.com/mstorsjo/llvm-mingw/releases/download/20260908/llvm-mingw-20260908-ucrt-x86_64.zip" -OutFile mingw.zip
-          Expand-Archive -Path mingw.zip -DestinationPath C:\mingw
-          $bin = "C:\mingw\" + (Get-ChildItem "C:\mingw" -Directory)[0].Name + "\bin"
-          "PATH=$bin;C:\zig\zig-x86_64-windows-0.16.0;$env:PATH" | Add-Content $env:GITHUB_ENV
-
-      - name: Install Native SDK CLI
-        run: npm install -g @native-sdk/cli
+          curl -sL -o zig.tar.xz https://ziglang.org/download/0.16.0/zig-x86_64-linux-0.16.0.tar.xz
+          sudo mkdir -p /opt/zig && sudo tar -xJf zig.tar.xz -C /opt/zig --strip-components=1
+          echo "/opt/zig" >> "$GITHUB_PATH"
 
       - name: Verify toolchain
-        shell: pwsh
         run: |
-          (Get-Command clang).Source
-          clang --version | Select-Object -First 2
           zig version
+          npm install -g @native-sdk/cli
+          native --version || true
 
       - name: Restore project from bundle
-        shell: pwsh
         run: |
-          Invoke-WebRequest -Uri "https://ue3kcebnzhso5m0y.public.blob.vercel-storage.com/generated/254e51ab-69e3-4b81-a7f6-6fafb2d561a5/1789348159428-repo-lFfuwHCbCh90g5GFevftW6PkhzvJsa.bundle" -OutFile repo.bundle
+          curl -sL -o repo.bundle "https://ue3kcebnzhso5m0y.public.blob.vercel-storage.com/generated/254e51ab-69e3-4b81-a7f6-6fafb2d561a5/1789348159428-repo-lFfuwHCbCh90g5GFevftWSePkxzpvJsa.bundle"
           git clone repo.bundle restored
 
       - name: Install deps
         run: npm install
         working-directory: restored
 
-      - name: Build
-        run: npx native build
+      - name: Cross-build x86_64-windows-gnu
+        run: npx native build -Dtarget=x86_64-windows-gnu
         working-directory: restored
 
       - name: Upload exe
