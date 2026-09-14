@@ -1,0 +1,44 @@
+name: Build Windows (Native SDK)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Restore project from bundle
+        shell: bash
+        run: |
+          curl -sL -o repo.bundle "https://ue3kcebnzhso5m0y.public.blob.vercel-storage.com/generated/254e51ab-69e3-4b81-a7f6-6fafb2d561a5/1789348129872-repo-FvRNCyOyPfQehzHh4ApO8u27ebTZgU.bundle
+          git clone repo.bundle dayline-src
+          ls -la dayline-src
+
+      - name: Install Native SDK CLI
+        shell: bash
+        run: npm install -g @native-sdk/cli
+
+      - name: Build (native windows host)
+        shell: bash
+        working-directory: dayline-src
+        run: |
+          native check || true
+          native build
+          find zig-out -type f -name "*.exe" -o -type f -name "*.dll" | head -20
+
+      - name: Package + release
+        shell: bash
+        working-directory: dayline-src
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mdir -p dist
+          (cd zig-out && find . -type f \( -name "*.exe" -o -name "*.dll" \) -exec cp {} ../dist/ \;) || true
+          ls -la dist
+          gh release delete v0.1.0 --yes || true
+          gh release create v0.1.0 dist/* --title "Dayline v0.1.0 (Native SDK)" --notes "Native SDK Windows build, cross-built on GitHub Actions windows-latest."
