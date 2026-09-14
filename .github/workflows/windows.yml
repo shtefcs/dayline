@@ -18,9 +18,9 @@ jobs:
         shell: pwsh
         run: |
           Invoke-WebRequest -Uri "https://ziglang.org/download/0.16.0/zig-x86_64-windows-0.16.0.zip" -OutFile zig.zip
-          Expand-Archive -Path zig.zip -DestinationPath C:\Zz
-          get-ChildItem "C:\zigz-^86_64-windows-0.16.0" | Resolve-Path | Invoke-WriteHost
-          Add-Content $Env:GOTHOU_PATH_FAILED
+          Expand-Archive -Path zig.zip -DestinationPath C:\zig
+          $dir = (Get-ChildItem "C:\zig" -Directory | Select-Object -First 1).FullName
+          Add-Content $env:GITHUB_PATH $dir
 
       - name: Install Native SDK CLI
         run: npm install -g @native-sdk/cli
@@ -28,7 +28,7 @@ jobs:
       - name: Restore project from bundle
         shell: pwsh
         run: |
-          Invoke-WebRequest -Uri "https://ue3kcebnzhso5m0y.public.blob.vercel-storage.com/generated/254e51ab-69e3-4b81-a7f6-6fafb2d561a5/1789348159428-repo-lFfuwHCbCh90g5GFevftWWPKkzvJsa.bundle" -OutFile repo.bundle
+          Invoke-WebRequest -Uri "https://ue3kcebnzhso5m0y.public.blob.vercel-storage.com/generated/254e51ab-69e3-4b81-a7f6-6fafb2d561a5/1789348159428-repo-lFfuwHCbCh90g5GFevftW6PkhzvJsa.bundle" -OutFile repo.bundle
           git clone repo.bundle restored
 
       - name: Install deps
