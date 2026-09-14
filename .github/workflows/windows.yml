@@ -28,7 +28,10 @@ jobs:
           Invoke-WebRequest -Uri "https://github.com/mstorsjo/llvm-mingw/releases/download/20260908/llvm-mingw-20260908-ucrt-x86_64.zip" -OutFile mingw.zip
           Expand-Archive -Path mingw.zip -DestinationPath C:\mingw
           $bin = (Get-ChildItem "C:\mingw\llvm-mingw-*\bin" | Resolve-Path).Path
-          Add-Content $env:GITHUB_PATH $bin
+          "PATH=$bin;C:\zig\zig-x86_64-windows-0.16.0;$env:PATH" | Add-Content $env:GITHUB_ENV
+
+      - name: Verify clang
+        run: "Get-Command clang | Select-Object Source; clang --version"
 
       - name: Install Native SDK CLI
         run: npm install -g @native-sdk/cli
