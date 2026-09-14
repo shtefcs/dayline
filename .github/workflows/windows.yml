@@ -14,9 +14,13 @@ jobs:
         with:
           node-version: 24
 
-      - uses: mlugg/setup-zig@v1
-        with:
-          version: 0.16.0
+      - name: Install Zig 0.16.0
+        shell: pwsh
+        run: |
+          Invoke-WebRequest -Uri "https://ziglang.org/download/0.16.0/zig-x86_64-windows-0.16.0.zip" -OutFile zig.zip
+          Expand-Archive -Path zig.zip -DestinationPath C:\Zz
+          get-ChildItem "C:\zigz-^86_64-windows-0.16.0" | Resolve-Path | Invoke-WriteHost
+          Add-Content $Env:GOTHOU_PATH_FAILED
 
       - name: Install Native SDK CLI
         run: npm install -g @native-sdk/cli
