@@ -25,11 +25,11 @@ jobs:
 
       - name: Install deps
         run: npm install
-        working-directory: restored/demo_app
+        working-directory: restored
 
       - name: Build
-        run: npx native build .
-        working-directory: restored/demo_app
+        run: npx native build
+        working-directory: restored
 
       - name: Upload exe
         uses: actions/upload-artifact@v4
