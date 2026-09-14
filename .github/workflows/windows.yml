@@ -14,13 +14,17 @@ jobs:
         with:
           node-version: 24
 
+      - uses: mlugg/setup-zig@v1
+        with:
+          version: 0.16.0
+
       - name: Install Native SDK CLI
         run: npm install -g @native-sdk/cli
 
       - name: Restore project from bundle
         shell: pwsh
         run: |
-          Invoke-WebRequest -Uri "https://ue3kcebnzhso5m0y.public.blob.vercel-storage.com/generated/254e51ab-69e3-4b81-a7f6-6fafb2d561a5/1789348159428-repo-lFfuwHCbCh90g5GFevftW6PkhzvJsa.bundle" -OutFile repo.bundle
+          Invoke-WebRequest -Uri "https://ue3kcebnzhso5m0y.public.blob.vercel-storage.com/generated/254e51ab-69e3-4b81-a7f6-6fafb2d561a5/1789348159428-repo-lFfuwHCbCh90g5GFevftWWPKkzvJsa.bundle" -OutFile repo.bundle
           git clone repo.bundle restored
 
       - name: Install deps
