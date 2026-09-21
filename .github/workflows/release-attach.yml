@@ -16,8 +16,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -e
-          curl -fsSL -o Dayline-v15.exe "https://ue3kcebnzhso5m0y.public.blob.vercel-storage.com/generated/254e51ab-69e3-4b81-a7f6-6fafb2d561a5/1789757903823-Dayline-v15-byQZhgG2C1w2plOLuYNyEvPqJyTFv7.exe"
-          ls -la Dayline-v15.exe
-          zip -q Dayline-v15.zip Dayline-v15.exe
-          ls -la
-          gh release upload v15 Dayline-v15.zip Dayline-v15.exe --repo shtefcs/dayline --clobber
+          curl -fsSL -o Dayline-v16.exe "https://ue3kcebnzhso5m0y.public.blob.vercel-storage.com/generated/254e51ab-69e3-4b81-a7f6-6fafb2d561a5/1789959195777-Dayline-v16-6TdIiOOT9cM8HQXtwNXH5rA23fEPPp.exe"
+          ls -la Dayline-v16.exe
+          sha256sum Dayline-v16.exe
+          zip -q Dayline-v16.zip Dayline-v16.exe
+          gh release upload v16 Dayline-v16.zip Dayline-v16.exe --repo shtefcs/dayline --clobber
