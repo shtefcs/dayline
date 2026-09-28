@@ -10,13 +10,14 @@ jobs:
   attach:
     runs-on: ubuntu-latest
     steps:
-      - name: Fetch and attach protected zip
+      - name: Fetch and attach artifacts
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -e
-          curl -fsSL -o Dayline-v19-protected.zip "https://ue3kcebnzhso5m0y.public.blob.vercel-storage.com/generated/254e51ab-69e3-4b81-a7f6-6fafb2d561a5/1790137410963-Dayline-v19-protected-ebxvamXqItQvHlfx3TnUC1FtK8vRyM.zip"
-          ls -la Dayline-v19-protected.zip
-          sha256sum Dayline-v19-protected.zip
-          gh release upload v19 Dayline-v19-protected.zip --repo shtefcs/dayline --clobber
+          curl -fsSL -o Dayline-v20.exe "https://ue3kcebnzhso5m0y.public.blob.vercel-storage.com/generated/254e51ab-69e3-4b81-a7f6-6fafb2d561a5/1790584547492-Dayline-v20-DmOOSHgfFbrSh0N2IJWH3mJvKENP5s.exe"
+          ls -la Dayline-v20.exe
+          sha256sum Dayline-v20.exe
+          zip -q Dayline-v20.zip Dayline-v20.exe
+          gh release upload v20 Dayline-v20.zip Dayline-v20.exe --repo shtefcs/dayline --clobber
