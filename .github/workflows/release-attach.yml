@@ -1,3 +1,5 @@
+# Dayline v22 - atach assets to release
+
 name: Attach release assets
 
 on:
@@ -16,8 +18,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -e
-          curl -fsSL -o Dayline-v21.exe "https://ue3kcebnzhso5m0y.public.blob.vercel-storage.com/generated/254e51ab-69e3-4b81-a7f6-6fafb2d561a5/1790650188877-Dayline-v21-jfKSRwMBywSN5kWuZK5zqGK3xOFS7J.exe"
-          ls -la Dayline-v21.exe
-          sha256sum Dayline-v21.exe
-          zip -q Dayline-v21.zip Dayline-v21.exe
-          gh release upload v21 Dayline-v21.zip Dayline-v21.exe --repo shtefcs/dayline --clobber
+          curl -fsSL -o Dayline-v22.exe "https://ue3kcebnzhso5m0y.public.blob.vercel-storage.com/generated/254e51ab-69e3-4b81-a7f6-6fafb2d561a5/1790689591407-Dayline-v22-cvI0uyfvBHar9opEWXABPqgg0xOiadX.exe"
+          ls -la Dayline-v22.exe
+          sha256sum Dayline-v22.exe
+          zip -q Dayline-v22.zip Dayline-v22.exe
+          gh release upload v22 Dayline-v22.zip Dayline-v22.exe --repo shtefcs/dayline --clobber
