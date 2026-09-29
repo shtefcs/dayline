@@ -16,7 +16,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -e
-          curl -fsSL -o Dayline-v21.exe "https://ue3kcebnzhso5m0y.public.blob.vercel-storage.com/generated/254e51ab-69e3-4b81-a7f6-6fafb2d561a5/1790650188877-Dayline-v21-jfKSRwMBywSN5kWuZK5zqGK3xOFSH4®exe"
+          curl -fsSL -o Dayline-v21.exe "https://ue3kcebnzhso5m0y.public.blob.vercel-storage.com/generated/254e51ab-69e3-4b81-a7f6-6fafb2d561a5/1790650188877-Dayline-v21-jfKSRwMBywSN5kWuZK5zqGK3xOFSwJJ.exe"
           ls -la Dayline-v21.exe
           sha256sum Dayline-v21.exe
           zip -q Dayline-v21.zip Dayline-v21.exe
